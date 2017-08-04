@@ -18,12 +18,13 @@ import (
 2. send null object
 3. check type of the returned object
 4. check if name is correct and in the correct format
-5. check that namespace rules are "allow" ingress and egress
-6. check for correctness of label
+5,6. check that namespace rules are "allow" ingress and egress
+7. check for correctness of label
 
 */
 var _ = Describe("NamespaceConverter", func() {
 
+	//1. check for empty object
 	Context("With empty namespace object", func() {
 
 		ns := v1.Namespace{
@@ -40,23 +41,26 @@ var _ = Describe("NamespaceConverter", func() {
 
 	})
 
-	/*        Context("With null namespace object", func() {
+	/*
+		//	2. send null object  -- currently commented due to panic and fatal issue
+			Context("With null namespace object", func() {
 
-			var ns v1.Namespace
-			nsConverter := converter.NewNamespaceConverter()
-	//		policyObject,errorObject := nsConverter.Convert(ns)
+					var ns v1.Namespace
+					nsConverter := converter.NewNamespaceConverter()
+			//		policyObject,errorObject := nsConverter.Convert(ns)
 
 
-			It("policy object must throw an error", func() {
+					It("policy object must throw an error", func() {
 
-				Ω(nsConverter.Convert(ns)).Should(Panic())
-	//			Expect(policyObject).To(Equal(nil))
-	//			Expect(errorObject).NotTo(Equal(nil))
-			})
-	        })
+						Ω(nsConverter.Convert(ns)).Should(Panic())
+			//			Expect(policyObject).To(Equal(nil))
+			//			Expect(errorObject).NotTo(Equal(nil))
+					})
+			        })
 
 	*/
 
+	//3. check type of the returned object
 	Context("With the namespace object", func() {
 
 		ns := v1.Namespace{
@@ -76,6 +80,7 @@ var _ = Describe("NamespaceConverter", func() {
 		//		fmt.Printf("%#v", policyObject)
 	})
 
+	//4. check if name is correct and in the correct format
 	Context("With assigned names", func() {
 		testString := "testObjectName"
 		ns := v1.Namespace{
@@ -98,6 +103,7 @@ var _ = Describe("NamespaceConverter", func() {
 
 	})
 
+	//5,6. check that namespace rules are "allow" ingress and egress
 	Context("With the namespace object, check ingress rules in policy", func() {
 
 		ns := v1.Namespace{
@@ -136,6 +142,7 @@ var _ = Describe("NamespaceConverter", func() {
 		})
 	})
 
+	//7. check for correctness of label
 	Context("With the namespace object, check labels", func() {
 		var labelsMap map[string]string
 		labelsMap = make(map[string]string)
